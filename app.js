@@ -44,8 +44,6 @@ function convertToBinary(ipArray) {
     for (let i = 0; i < binaryArray.length; i++) {
         binaryArray[i].length === 8 ? null : binaryArray[i] = binaryArray[i].padStart(8, `0`);
    };
-
-   console.log(`The octet binaries of the provided network IP are: ${binaryArray}`);
    // Determine the number of bits covered by the subnet mask, and return the network octets in binary.
    getSubnetBinaries(subnetMask, binaryArray);
 };
@@ -56,7 +54,11 @@ function getSubnetBinaries(mask, binaryArray) {
     let appendedZeros = 32 - mask;
     let subnetwork = (binaryArray.join(``).slice(0,mask));
     let numHosts = Math.pow(2,(32-mask))
-    console.log(`Total number of hosts in range is: ${numHosts}`)
+    console.log(`
+    ***************************************************
+        Total number of hosts in range: ${numHosts}
+    ***************************************************
+        ` )
     subnetwork = subnetwork.concat('0'.repeat(appendedZeros));
     findNetworkIP(subnetwork);
 }
@@ -73,8 +75,7 @@ function findNetworkIP(subnetwork) {
         const octString = oct.join('');
         binaryOctets.push(octString);
     };
-    console.log(`The Subnetwork binary octets are: ${binaryOctets}`);
-    
+
     const networkDecimalValues = binaryOctets.map(octet => parseInt(octet,2));
     
     readline.close();
